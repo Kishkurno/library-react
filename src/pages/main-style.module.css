@@ -1,0 +1,58 @@
+/* main */
+
+
+.results-txt {
+  font-weight: 100;
+  text-align: center;
+  margin: 20px 0 40px;
+}
+
+.books-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 35px;
+}
+
+.book {
+  background-color: rgba(155, 155, 155, 0.293);
+  height: 400px;
+  padding: 40px 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-img {
+  display: flex;
+  justify-content: center;
+}
+
+.book-img {
+  height: 280px;
+  display: block;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.25);
+}
+
+.book-info {
+  padding: 30px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-category {
+  color: rgb(126, 126, 126);
+  font-weight: 150;
+  font-size: 15px;
+  text-decoration: underline;
+}
+
+.book-description {
+  font-weight: bold;
+  margin: 8px 0;
+  font-size: 17px;
+}
+
+.book-author {
+  font-weight: 150;
+  font-size: 17px;
+  color: rgb(126, 126, 126);
+}
