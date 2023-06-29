@@ -1,6 +1,24 @@
+import axios from "axios";
 import style from "./main-style.module.css"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+
 
 export const LibraryMain = () => {
+  const [books, setBooks] = useState([]);
+
+
+  useEffect(() => {
+    async function function1() {
+      const responseBooks = await axios.get("https://www.googleapis.com/books/v1/volumes?q=react&key=AIzaSyAGLC_lydN9t5Dwb5fZ14_ZE9AsjKdH3c4")
+      setBooks(responseBooks.data.items);
+
+    }
+
+    function1();
+  }, [])
+
   return (
     <main>
 
@@ -8,86 +26,34 @@ export const LibraryMain = () => {
 
       <div className={style['books-catalog']}>
 
-        <div className={style.book}>
 
-          <div className={style['container-img']}>
-            <img className={style['book-img']} src="src/assets/краткие ответы на большие вопросы.png" />
-          </div>
+        {books.map(book => {
+          const [firstAuthor, secondAuthor] = book.volumeInfo.authors
+          console.log(book.volumeInfo.categories[0])
+          return (
+            <Link className={style.linkMain} to={`/${book.id}`}>
 
-          <div className={style['book-info']}>
+              <div key={book.id} className={style.book}>
 
-            <p className={style['book-category']} >Computers</p>
-            <div className={style['book-description']}> Node.js Разработка серверных веб-приложений на JavaScript</div>
-            <div className={style['book-author']}>Дэвид Хэррон</div>
+                <div className={style['container-img']}>
+                  <img className={style['book-img']} src={`${book.volumeInfo.imageLinks.thumbnail}`} />
+                </div>
 
-          </div>
+                <div className={style['book-info']}>
 
-        </div>
+                  <p className={style['book-category']} >{book.volumeInfo.categories[0]}</p>
+                  <div className={style['book-description']}> {book.volumeInfo.title}</div>
+                  <div className={style['book-author']}>{firstAuthor}<br /> {secondAuthor}</div>
 
-        <div className={style.book}>
+                </div>
 
-          <div className={style['container-img']}>
-            <img className={style['book-img']} src="src/assets/краткие ответы на большие вопросы.png" />
-          </div>
+              </div>
+            </Link>
 
-          <div className={style['book-info']}>
+          )
 
-            <p className={style['book-category']} >Computers</p>
-            <div className={style['book-description']}> Node.js Разработка серверных веб-приложений на JavaScript</div>
-            <div className={style['book-author']}>Дэвид Хэррон</div>
+        })}
 
-          </div>
-
-        </div>
-
-        <div className={style.book}>
-
-          <div className={style['container-img']}>
-            <img className={style['book-img']} src="src/assets/краткие ответы на большие вопросы.png" />
-          </div>
-
-          <div className={style['book-info']}>
-
-            <p className={style['book-category']} >Computers</p>
-            <div className={style['book-description']}> Node.js Разработка серверных веб-приложений на JavaScript</div>
-            <div className={style['book-author']}>Дэвид Хэррон</div>
-
-          </div>
-
-        </div>
-
-
-        <div className={style.book}>
-
-          <div className={style['container-img']}>
-            <img className={style['book-img']} src="src/assets/краткие ответы на большие вопросы.png" />
-          </div>
-
-          <div className={style['book-info']}>
-
-            <p className={style['book-category']} >Computers</p>
-            <div className={style['book-description']}> Node.js Разработка серверных веб-приложений на JavaScript</div>
-            <div className={style['book-author']}>Дэвид Хэррон</div>
-
-          </div>
-
-        </div>
-
-        <div className={style.book}>
-
-          <div className={style['container-img']}>
-            <img className={style['book-img']} src="src/assets/краткие ответы на большие вопросы.png" />
-          </div>
-
-          <div className={style['book-info']}>
-
-            <p className={style['book-category']} >Computers</p>
-            <div className={style['book-description']}> Node.js Разработка серверных веб-приложений на JavaScript</div>
-            <div className={style['book-author']}>Дэвид Хэррон</div>
-
-          </div>
-
-        </div>
 
 
       </div>

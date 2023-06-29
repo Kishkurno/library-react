@@ -21,6 +21,11 @@
   flex-direction: column;
 }
 
+.linkMain {
+  text-decoration: none;
+  color: inherit;
+}
+
 .container-img {
   display: flex;
   justify-content: center;
