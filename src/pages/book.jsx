@@ -28,7 +28,7 @@ export const BookPage = () => {
 
       <div className={style['info-container']}>
 
-        <p className={style['result-categor-sort']} >{book.volumeInfo.categories[0]}</p>
+        <p className={style['result-categor-sort']} >{book.volumeInfo.categories}</p>
 
         <p className={style['book-name-txt']}>{book.volumeInfo.title}</p>
 

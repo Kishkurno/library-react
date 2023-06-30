@@ -1,5 +1,8 @@
+import { useContext } from "react"
 import style from "./header-style.module.css"
+import { SearchContext } from "../../App"
 export const Header = () => {
+  const { searchParams, setSearchParams } = useContext(SearchContext)
   return (
     <header className={style['header-div']} >
 

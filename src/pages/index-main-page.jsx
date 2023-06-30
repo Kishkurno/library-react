@@ -12,6 +12,7 @@ export const LibraryMain = () => {
   useEffect(() => {
     async function function1() {
       const responseBooks = await axios.get("https://www.googleapis.com/books/v1/volumes?q=react&key=AIzaSyAGLC_lydN9t5Dwb5fZ14_ZE9AsjKdH3c4")
+      console.log(responseBooks.data.items)
       setBooks(responseBooks.data.items);
 
     }
@@ -29,7 +30,7 @@ export const LibraryMain = () => {
 
         {books.map(book => {
           const [firstAuthor, secondAuthor] = book.volumeInfo.authors
-          console.log(book.volumeInfo.categories[0])
+
           return (
             <Link className={style.linkMain} to={`/${book.id}`}>
 
@@ -41,7 +42,7 @@ export const LibraryMain = () => {
 
                 <div className={style['book-info']}>
 
-                  <p className={style['book-category']} >{book.volumeInfo.categories[0]}</p>
+                  <p className={style['book-category']} >{book.volumeInfo.categories}</p>
                   <div className={style['book-description']}> {book.volumeInfo.title}</div>
                   <div className={style['book-author']}>{firstAuthor}<br /> {secondAuthor}</div>
 
