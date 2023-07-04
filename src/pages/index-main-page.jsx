@@ -1,24 +1,27 @@
 import axios from "axios";
 import style from "./main-style.module.css"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { SearchContext } from "../App";
 
 
 export const LibraryMain = () => {
   const [books, setBooks] = useState([]);
 
+  const { searchParams, setSearchParams } = useContext(SearchContext)
 
   useEffect(() => {
     async function function1() {
-      const responseBooks = await axios.get("https://www.googleapis.com/books/v1/volumes?q=react&key=AIzaSyAGLC_lydN9t5Dwb5fZ14_ZE9AsjKdH3c4")
+      const search = searchParams.search == '' ? 'react' : searchParams.search
+      const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}& key= AIzaSyAGLC_lydN9t5Dwb5fZ14_ZE9AsjKdH3c4`)
       console.log(responseBooks.data.items)
       setBooks(responseBooks.data.items);
 
     }
 
     function1();
-  }, [])
+  }, [searchParams.search])
+
 
   return (
     <main>
@@ -28,16 +31,22 @@ export const LibraryMain = () => {
       <div className={style['books-catalog']}>
 
 
-        {books.map(book => {
-          const [firstAuthor, secondAuthor] = book.volumeInfo.authors
+        {books.length && books.map(book => {
+          let firstAuthor, secondAuthor;
+
+          if (book.volumeInfo.authors) {
+            [firstAuthor, secondAuthor] = book.volumeInfo.authors;
+          } else {
+            firstAuthor = secondAuthor = 'Unknown author';
+          }
 
           return (
-            <Link className={style.linkMain} to={`/${book.id}`}>
+            <Link className={style.linkMain} to={`/ ${book.id}`}>
 
               <div key={book.id} className={style.book}>
 
                 <div className={style['container-img']}>
-                  <img className={style['book-img']} src={`${book.volumeInfo.imageLinks.thumbnail}`} />
+                  <img alt="no found :(" className={style['book-img']} src={`${book.volumeInfo.imageLinks?.thumbnail}`} />
                 </div>
 
                 <div className={style['book-info']}>

@@ -3,6 +3,15 @@ import style from "./header-style.module.css"
 import { SearchContext } from "../../App"
 export const Header = () => {
   const { searchParams, setSearchParams } = useContext(SearchContext)
+
+  function handleSearch() {
+    console.log('wef')
+  }
+
+  function handleSearchInput(event) {
+    setSearchParams(prev => ({ ...prev, search: event.target.value }))
+  }
+
   return (
     <header className={style['header-div']} >
 
@@ -11,8 +20,8 @@ export const Header = () => {
       </div>
 
       <div className={style['header-search']}>
-        <input className={style['input-search']} type="text" placeholder="Search..." />
-        <button className={style['header-searchButton']}>
+        <input className={style['input-search']} onChange={handleSearchInput} type="text" placeholder="Search..." />
+        <button className={style['header-searchButton']} onClick={handleSearch}>
         </button>
       </div>
 
