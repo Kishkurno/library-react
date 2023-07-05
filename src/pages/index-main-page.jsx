@@ -6,32 +6,43 @@ import { SearchContext } from "../App";
 
 
 export const LibraryMain = () => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState({});
 
   const { searchParams, setSearchParams } = useContext(SearchContext)
 
   useEffect(() => {
     async function function1() {
-      const search = searchParams.search == '' ? 'react' : searchParams.search
-      const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}& key= AIzaSyAGLC_lydN9t5Dwb5fZ14_ZE9AsjKdH3c4`)
-      console.log(responseBooks.data.items)
-      setBooks(responseBooks.data.items);
+      const search = searchParams.search == '' ? 'js' : searchParams.search
+
+      console.log('kjh')
+
+      if (searchParams.sortBy != '') {
+        const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}+subject:${searchParams.category}&orderBy=${searchParams.sortBy}& key= ${import.meta.env.GOOGLE_API_KEY}`)
+        console.log(responseBooks.data)
+        setBooks(responseBooks.data);
+      }
+      else {
+        console.log('mort')
+        const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}+subject:${searchParams.category}& key= ${import.meta.env.GOOGLE_API_KEY}`)
+        console.log(responseBooks.data)
+        setBooks(responseBooks.data);
+      }
 
     }
 
     function1();
-  }, [searchParams.search])
+  }, [searchParams.search, searchParams.category, searchParams.sortBy])
 
 
   return (
     <main>
 
-      <p className={style['results-txt']}>Found 466 results</p>
+      <p className={style['results-txt']}>Found {books.totalItems} results</p>
 
       <div className={style['books-catalog']}>
 
 
-        {books.length && books.map(book => {
+        {books?.items?.length && books.items.map(book => {
           let firstAuthor, secondAuthor;
 
           if (book.volumeInfo.authors) {
@@ -41,9 +52,9 @@ export const LibraryMain = () => {
           }
 
           return (
-            <Link className={style.linkMain} to={`/ ${book.id}`}>
+            <Link key={book.id} className={style.linkMain} to={`/ ${book.id}`}>
 
-              <div key={book.id} className={style.book}>
+              <div className={style.book}>
 
                 <div className={style['container-img']}>
                   <img alt="no found :(" className={style['book-img']} src={`${book.volumeInfo.imageLinks?.thumbnail}`} />
