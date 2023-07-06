@@ -57,14 +57,14 @@ export const LibraryMain = () => {
               <div className={style.book}>
 
                 <div className={style['container-img']}>
-                  <img alt="no found :(" className={style['book-img']} src={`${book.volumeInfo.imageLinks?.thumbnail}`} />
+                  <img alt=" Image not found :(" className={style['book-img']} src={`${book.volumeInfo.imageLinks?.thumbnail}`} />
                 </div>
 
                 <div className={style['book-info']}>
 
                   <p className={style['book-category']} >{book.volumeInfo.categories}</p>
                   <div className={style['book-description']}> {book.volumeInfo.title}</div>
-                  <div className={style['book-author']}>{firstAuthor}<br /> {secondAuthor}</div>
+                  <div className={style['book-author']}>{firstAuthor}</div>
 
                 </div>
 
