@@ -6,9 +6,9 @@ export const Header = () => {
 
   const [search, setSearch] = useState('')
 
-  const categories = ['', 'ART', 'Fiction', 'Science', 'Computer', 'Space']
+  const categories = ['all', 'ART', 'biography', 'history', 'computers', 'medical', 'poetry']
 
-  const sortTypes = ['', 'Relevance', 'Newest']
+  const sortTypes = ['Relevance', 'Newest']
 
   function handleCategory(event) {
     setSearchParams(prev => ({ ...prev, category: event.target.value }))
@@ -56,6 +56,8 @@ export const Header = () => {
         </div>
 
       </div>
+
+
     </header >
 
   )
