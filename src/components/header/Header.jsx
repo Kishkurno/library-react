@@ -14,7 +14,6 @@ export const Header = () => {
     setSearchParams(prev => ({ ...prev, category: event.target.value }))
   }
 
-
   function handleSort(event) {
     setSearchParams(prev => ({ ...prev, sortBy: event.target.value }))
   }

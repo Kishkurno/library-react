@@ -40,10 +40,7 @@ export const LibraryMain = () => {
           setBooks(prev => ({ ...prev, items: [...prev.items, ...responseBooks.data.items] }))
         }
 
-
       }
-
-
     }
 
     function1();
@@ -94,8 +91,6 @@ export const LibraryMain = () => {
             )
 
           }) : <p className={style.indLoader}>Идёт загрузка...</p>}
-
-
 
         </div>
 
