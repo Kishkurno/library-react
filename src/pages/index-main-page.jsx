@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../App";
 import notFoundImg from "../assets/notFoundImg.png"
+import { fetchBooks } from "../services/fetchBooks";
+import { fetchSortedBooks } from "../services/fetchSortedBooks";
 
 export const LibraryMain = () => {
 
@@ -12,15 +14,16 @@ export const LibraryMain = () => {
   const [startIndex, setStartIndex] = useState(0)
   const { searchParams, setSearchParams } = useContext(SearchContext)
 
-
   useEffect(() => {
-    async function function1() {
-      const search = searchParams.search == '' ? 'js' : searchParams.search
+    async function requestBooks() {
+      const search = searchParams.search == '' ? 'react' : searchParams.search
       const category = searchParams.category == 'all' ? '' : searchParams.category
 
+      const responseBooks = await fetchBooks(search, category, maxResults, startIndex);
+
       if (searchParams.sortBy != '') {
-        const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}+subject:${category}&orderBy=${searchParams.sortBy}& key= ${import.meta.env.GOOGLE_API_KEY}&maxResults=${maxResults}&startIndex=${startIndex}`)
-        console.log(responseBooks.data)
+
+        const responseBooks = await fetchSortedBooks(search, category, searchParams.sortBy, maxResults, startIndex);
         if (startIndex == 0) {
           setBooks(prev => prev = responseBooks.data);
         }
@@ -30,8 +33,6 @@ export const LibraryMain = () => {
 
       }
       else {
-        const responseBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}+subject:${category}& key= ${import.meta.env.GOOGLE_API_KEY}&maxResults=${maxResults}&startIndex=${startIndex}`)
-        console.log(responseBooks.data)
 
         if (startIndex == 0) {
           setBooks(prev => prev = responseBooks.data);
@@ -43,25 +44,18 @@ export const LibraryMain = () => {
       }
     }
 
-    function1();
+    requestBooks();
   }, [searchParams.search, searchParams.category, searchParams.sortBy, startIndex])
 
-
   return (
-
-
     <>
       <main>
 
         <p className={style['results-txt']}>Found {books.totalItems} results</p>
 
         <div className={style['books-catalog']}>
-
-
           {books?.items?.length ? books.items.map(book => {
-
             let categoryBook;
-
             if (book.volumeInfo.categories) {
               [categoryBook] = book.volumeInfo.categories;
             } else {
@@ -72,7 +66,6 @@ export const LibraryMain = () => {
               <Link key={book.id} className={style.linkMain} to={`/ ${book.id}`}>
 
                 <div className={style.book}>
-
                   <div className={style['container-img']}>
                     <img className={style['book-img']} src={book.volumeInfo.imageLinks?.thumbnail ? `${book.volumeInfo.imageLinks?.thumbnail}` : notFoundImg} />
                   </div>
@@ -82,15 +75,11 @@ export const LibraryMain = () => {
                     <p className={style['book-category']} >{categoryBook}</p>
                     <div className={style['book-description']}> {book.volumeInfo.title}</div>
                     <div className={style['book-author']}>{book.volumeInfo?.authors}</div>
-
                   </div>
-
                 </div>
               </Link>
-
             )
-
-          }) : <p className={style.indLoader}>Идёт загрузка...</p>}
+          }) : <p className={style.indLoader}>Loading...</p>}
 
         </div>
 

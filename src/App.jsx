@@ -1,26 +1,12 @@
-import { LibraryMain } from "./pages/index-main-page"
-import { BookPage, loaderBook } from "./pages/book"
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { createContext, useState } from "react";
 import { Header } from "./components/header/Header";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LibraryMain />,
-  },
-  {
-    path: "/:id",
-    element: <BookPage />,
-    loader: loaderBook
-  }
-]);
+import { router } from "./components/router";
 
 export const SearchContext = createContext(null)
 
 function App() {
   const [searchParams, setSearchParams] = useState({ search: '', category: '', sortBy: '' })
-
 
   return (
 
