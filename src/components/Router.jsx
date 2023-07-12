@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import { BOOK_ROUTE, INDEX_ROUTE } from "../constants/routes";
-import { LibraryMain } from "../pages/index-main-page";
-import { BookPage, loaderBook } from "../pages/book";
+import { BookPage, loaderBook } from "../pages/bookPage/book";
+import { LibraryMain } from "../pages/indexPage/indexPage";
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +12,6 @@ export const router = createBrowserRouter([
   {
     path: BOOK_ROUTE,
     element: <BookPage />,
-    loader: loaderBook
-  }
+    loader: loaderBook,
+  },
 ]);
